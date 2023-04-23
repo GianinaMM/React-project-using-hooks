@@ -1,0 +1,27 @@
+.uiFeatures {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  flex-direction: column;
+  border: 3px solid bisque;
+}
+.container .features {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.container .features .button {
+  border-radius: 10px;
+  height: 40px;
+  margin: 20px;
+}
+.container .features .button:hover {
+  background-color: khaki;
+}/*# sourceMappingURL=App.css.map */

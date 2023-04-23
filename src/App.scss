@@ -1,0 +1,32 @@
+@mixin flexbox() {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+
+.uiFeatures {
+    @include flexbox();
+}
+
+
+.container {
+@include flexbox();
+    margin-top: 100px;
+    flex-direction: column;
+    border: 3px solid bisque;
+
+    .features {
+        @include flexbox();
+
+
+        .button {
+            border-radius: 10px;
+            height: 40px;
+            margin: 20px;
+            &:hover {
+                background-color:khaki;
+            }
+        }
+    }
+}
