@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Feature from "./Feature/Feature";
+import FeaturesForm from "./FeaturesForm";
 
 const INITIAL_VALUES = [
   {
@@ -69,16 +70,27 @@ const Features = (props) => {
       case "Toggle AC":
         toggleAc(name);
         break;
-        // case "Clean":
-        // startCleaning(name);
-        // break;
+      // case "Clean":
+      // startCleaning(name);
+      // break;
     }
   };
+
+  const featuresContent = actions.map((action) => (
+    <Feature
+      key={action.id}
+      name={action.name}
+      action={action.action}
+      toggleAction={toggleTheAction}
+    ></Feature>
+  ));
 
   return (
     <div className="container">
       <div className="features">
-        {actions.map((action) => {
+        {featuresContent}
+
+        {/* {actions.map((action) => {
           return (
             <Feature
               key={action.id}
@@ -87,7 +99,7 @@ const Features = (props) => {
               toggleAction={toggleTheAction}
             ></Feature>
           );
-        })}
+        })} */}
         {/* <Feature
           name={actions[0].name}
           action={`Turn ${action[0].state ? "off" : "on"} Lights`}
@@ -110,6 +122,7 @@ const Features = (props) => {
           toggleAction={toggleTheAction}
         ></Feature> */}
       </div>
+      <FeaturesForm></FeaturesForm>
     </div>
   );
 };
