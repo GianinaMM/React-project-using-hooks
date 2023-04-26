@@ -33,6 +33,7 @@ const INITIAL_VALUES = [
 ];
 
 const Features = (props) => {
+  // let [actions, setActions] = useState([]); //simulate no results
   let [actions, setActions] = useState(INITIAL_VALUES);
 
   const toggleLights = (name) => {
@@ -61,6 +62,19 @@ const Features = (props) => {
     });
   };
 
+  const toggleCoffe = (name) => {
+    setActions((prevState) => {
+      const newState = prevState.map((feature) => {
+        if (feature.name === "Coffe time") {
+          feature.state = !feature.state;
+          feature.action = `Make a coffe ${feature.state ? "on" : "off"}`;
+        }
+        return feature;
+      });
+      return newState;
+    });
+  };
+
   const toggleTheAction = (name) => {
     props.toggleTheAction(name);
     switch (name) {
@@ -70,20 +84,33 @@ const Features = (props) => {
       case "Toggle AC":
         toggleAc(name);
         break;
-      // case "Clean":
-      // startCleaning(name);
-      // break;
+      case "Coffe time":
+        toggleCoffe(name);
+        break;
     }
   };
+  const updateFeatures = (feature) => {
+    setActions((prevState) => {
+      return [feature, ...prevState];
+    });
+  };
 
-  const featuresContent = actions.map((action) => (
-    <Feature
-      key={action.id}
-      name={action.name}
-      action={action.action}
-      toggleAction={toggleTheAction}
-    ></Feature>
-  ));
+  const noContentFound = <p style={{ color: "red" }}>No content found!!</p>;
+
+  let featuresContent;
+
+  if (actions.length === 0) {
+    featuresContent = noContentFound;
+  } else {
+    featuresContent = actions.map((action) => (
+      <Feature
+        key={action.id}
+        name={action.name}
+        action={action.action}
+        toggleAction={toggleTheAction}
+      ></Feature>
+    ));
+  }
 
   return (
     <div className="container">
@@ -122,7 +149,10 @@ const Features = (props) => {
           toggleAction={toggleTheAction}
         ></Feature> */}
       </div>
-      <FeaturesForm></FeaturesForm>
+      <FeaturesForm
+        updateTheFeatures={updateFeatures}
+        currentItems={actions.length}
+      ></FeaturesForm>
     </div>
   );
 };

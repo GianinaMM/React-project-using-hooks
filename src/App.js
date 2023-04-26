@@ -3,6 +3,7 @@ import Light from "./components/ui/Light";
 import Features from "./components/logic/Features";
 import Room from "./components/ui/Room";
 import Ac from "./components/ui/Ac";
+import Coffe from "./components/ui/Coffe";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -13,6 +14,7 @@ function App() {
   const [actions, setActions] = useState({
     lightState: false,
     acState: false,
+    coffeState: false,
     dirtProgress: 0,
   });
 
@@ -51,6 +53,16 @@ function App() {
     });
   };
 
+  const toggleCoffe = () => {
+    setActions((prevState) => {
+      const newState = {
+        ...prevState,
+        coffeState: !prevState.coffeState,
+      };
+      return newState;
+    });
+  };
+
   const startCleaning = () => {
     setActions((prevState) => {
       const newState = {
@@ -73,6 +85,10 @@ function App() {
       case "Clean":
         startCleaning();
         break;
+
+      case "Coffe time":
+        toggleCoffe();
+        break;
     }
   };
 
@@ -82,12 +98,14 @@ function App() {
         <Light lightsOn={actions.lightState}></Light>
         <Room status={actions.dirtProgress}></Room>
         <Ac acOn={actions.acState}></Ac>
+        <Coffe coffeOn={actions.coffeState}></Coffe>
       </div>
 
       <Features
         toggleTheAction={toggleAction}
         lightsState={actions.lightState}
         acState={actions.acState}
+        coffeState={actions.coffeState}
       ></Features>
     </div>
   );
