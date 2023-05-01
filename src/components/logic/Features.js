@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Feature from "./Feature/Feature";
 import FeaturesForm from "./FeaturesForm";
 
@@ -115,18 +115,20 @@ const Features = (props) => {
   return (
     <div className="container">
       <div className="features">
-        {featuresContent}
+        {/* {featuresContent} */}
 
-        {/* {actions.map((action) => {
-          return (
-            <Feature
-              key={action.id}
-              name={action.name}
-              action={action.action}
-              toggleAction={toggleTheAction}
-            ></Feature>
-          );
-        })} */}
+        {actions.length === 0
+          ? noContentFound
+          : actions.map((action) => {
+              return (
+                <Feature
+                  key={action.id}
+                  name={action.name}
+                  action={action.action}
+                  toggleAction={toggleTheAction}
+                ></Feature>
+              );
+            })}
         {/* <Feature
           name={actions[0].name}
           action={`Turn ${action[0].state ? "off" : "on"} Lights`}

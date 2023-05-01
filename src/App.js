@@ -16,6 +16,7 @@ function App() {
     acState: false,
     coffeState: false,
     dirtProgress: 0,
+    cleaned: 0,
   });
 
   useEffect(() => {
@@ -30,8 +31,8 @@ function App() {
           dirtProgress: prevState.dirtProgress + 0.1,
         };
       });
-    }, 2000);
-  }, []);
+    }, 1000);
+  }, [actions.cleaned]);
 
   const toggleLights = () => {
     setActions((prevState) => {
@@ -68,6 +69,7 @@ function App() {
       const newState = {
         ...prevState,
         dirtProgress: 0,
+        cleaned: !prevState.cleaned + 1,
       };
       return newState;
     });
