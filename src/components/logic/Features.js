@@ -33,8 +33,20 @@ const INITIAL_VALUES = [
 ];
 
 const Features = (props) => {
+  let allFeatures;
+
+  if (props.newFeature) {
+    allFeatures = [props.newFeature, ...INITIAL_VALUES];
+  } else {
+    allFeatures = [...INITIAL_VALUES];
+  }
+
   // let [actions, setActions] = useState([]); //simulate no results
-  let [actions, setActions] = useState(INITIAL_VALUES);
+  let [actions, setActions] = useState(allFeatures);
+
+  useEffect(() => {
+    console.log();
+  });
 
   const toggleLights = (name) => {
     setActions((prevState) => {
@@ -88,11 +100,6 @@ const Features = (props) => {
         toggleCoffe(name);
         break;
     }
-  };
-  const updateFeatures = (feature) => {
-    setActions((prevState) => {
-      return [feature, ...prevState];
-    });
   };
 
   const noContentFound = <p style={{ color: "red" }}>No content found!!</p>;
@@ -151,10 +158,6 @@ const Features = (props) => {
           toggleAction={toggleTheAction}
         ></Feature> */}
       </div>
-      <FeaturesForm
-        updateTheFeatures={updateFeatures}
-        currentItems={actions.length}
-      ></FeaturesForm>
     </div>
   );
 };

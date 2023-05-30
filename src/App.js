@@ -1,114 +1,57 @@
 import "./App.scss";
-import Light from "./components/ui/Light";
-import Features from "./components/logic/Features";
-import Room from "./components/ui/Room";
-import Ac from "./components/ui/Ac";
-import Coffe from "./components/ui/Coffe";
-import { useEffect, useState } from "react";
+import { Link, NavLink, Route, Routes } from "react-router-dom";
+import Welcome from "./components/logic/Welcome";
+import SmartHome from "./components/logic/SmartHome";
+import FeaturesForm from "./components/logic/FeaturesForm";
+import { useState } from "react";
 
 function App() {
-  // let [lightState, setLightState] = useState(false);
-  // const [acState, setAcState] = useState(false);
-  // const [dirtProgress, setDirtProgress] = useState(0.5);
-
-  const [actions, setActions] = useState({
-    lightState: false,
-    acState: false,
-    coffeState: false,
-    dirtProgress: 0,
-    cleaned: 0,
+  const [feature, setFeature] = useState({
+    name: "Toggle warm lights",
+    action: "Turn the warm lights",
+    state: false,
+    id: 500,
   });
-
-  useEffect(() => {
-    const dirtInterval = setInterval(() => {
-      setActions((prevState) => {
-        if (prevState.dirtProgress > 1) {
-          clearInterval(dirtInterval);
-        }
-
-        return {
-          ...prevState,
-          dirtProgress: prevState.dirtProgress + 0.1,
-        };
-      });
-    }, 1000);
-  }, [actions.cleaned]);
-
-  const toggleLights = () => {
-    setActions((prevState) => {
-      const newState = {
-        ...prevState,
-        lightState: !prevState.lightState,
-      };
-      return newState;
+  const updateFeatures = (feature) => {
+    setFeature((prevState) => {
+      // return [feature, ...prevState];
+      return feature;
     });
-  };
-
-  const toggleAc = () => {
-    setActions((prevState) => {
-      const newState = {
-        ...prevState,
-        acState: !prevState.acState,
-      };
-      return newState;
-    });
-  };
-
-  const toggleCoffe = () => {
-    setActions((prevState) => {
-      const newState = {
-        ...prevState,
-        coffeState: !prevState.coffeState,
-      };
-      return newState;
-    });
-  };
-
-  const startCleaning = () => {
-    setActions((prevState) => {
-      const newState = {
-        ...prevState,
-        dirtProgress: 0,
-        cleaned: !prevState.cleaned + 1,
-      };
-      return newState;
-    });
-  };
-
-  const toggleAction = (name) => {
-    switch (name) {
-      case "Toggle lights":
-        toggleLights();
-        break;
-
-      case "Toggle AC":
-        toggleAc();
-        break;
-      case "Clean":
-        startCleaning();
-        break;
-
-      case "Coffe time":
-        toggleCoffe();
-        break;
-    }
   };
 
   return (
     <div className="App">
-      <div className="uiFeatures">
-        <Light lightsOn={actions.lightState}></Light>
-        <Room status={actions.dirtProgress}></Room>
-        <Ac acOn={actions.acState}></Ac>
-        <Coffe coffeOn={actions.coffeState}></Coffe>
-      </div>
+      <header>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/welcome">Welcome</Link>
+            </li>
+            <li>
+              <NavLink to="/smart-home">Use Smart Home App</NavLink>
+            </li>
+            <li>
+              <NavLink to="/features-form">
+                Create a new smart home feature
+              </NavLink>
+            </li>
+          </ul>
+        </nav>
+      </header>
 
-      <Features
-        toggleTheAction={toggleAction}
-        lightsState={actions.lightState}
-        acState={actions.acState}
-        coffeState={actions.coffeState}
-      ></Features>
+      <Routes>
+        <Route path="/welcome" element={<Welcome></Welcome>}></Route>
+        <Route
+          path="/smart-home"
+          element={<SmartHome newFeature={feature}></SmartHome>}
+        ></Route>
+        <Route
+          path="/features-form"
+          element={
+            <FeaturesForm updateTheFeatures={updateFeatures}></FeaturesForm>
+          }
+        ></Route>
+      </Routes>
     </div>
   );
 }
