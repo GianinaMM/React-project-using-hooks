@@ -1,5 +1,5 @@
 const Welcome = () => {
-  return <div>Welcome component</div>;
+  return <div>Welcome to my app!</div>;
 };
 
 export default Welcome;

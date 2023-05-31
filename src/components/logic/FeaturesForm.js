@@ -1,8 +1,14 @@
 import { useRef, useState } from "react";
 import "./FeaturesForm.scss";
+import { useNavigate } from "react-router-dom";
+import Button from "@mui/material/Button";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 
 const FeaturesForm = (props) => {
   let [isFormValid, setFormValid] = useState(true);
+
+  const navigate = useNavigate();
 
   const titleInputRef = useRef();
   const actionInputRef = useRef();
@@ -45,10 +51,24 @@ const FeaturesForm = (props) => {
 
     props.updateTheFeatures(newFeature);
     resetFields();
+    navigate("/smart-home");
   };
 
+  const CustomWidthTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))({
+    [`& .${tooltipClasses.tooltip}`]: {
+      maxWidth: 500,
+    },
+  });
+
+  let longText = `
+  But I must explain to you how all this mistaken idea of 
+  denouncing pleasure and praising pain was born and I will give you a complete account of the system, and expound the actual teachings of
+   the great explorer of the truth, the master-builder of human happiness.`;
+
   return (
-    <div>
+    <>
       <form
         onSubmit={submitHandler}
         onKeyDown={checkValid}
@@ -107,10 +127,14 @@ const FeaturesForm = (props) => {
         </div>
 
         <div className="actions">
-          <button>Add feature</button>
+          <CustomWidthTooltip title={longText}>
+            <Button onClick={submitHandler} variant="text">
+              Add feature
+            </Button>
+          </CustomWidthTooltip>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 
